@@ -16,7 +16,9 @@
 </p>
 
 ## `static` keyword
+
 ```cs
+
 class Counter
 {
     public static int Count = 0;
@@ -33,6 +35,7 @@ var c2 = new Counter();
 Console.WriteLine(Counter.Count); // 2 (shared, not separate per object)
 
 ```
+
 ```cs
 public static class MathHelper
 {
@@ -73,68 +76,101 @@ class Config
     this is when you have multiple methods with the same name but different parameters (different type or number of parameters).
 </p>
 
-### Encapsulation
-<p>
-    is the bundling of data and methods that operate on that data within a single unit, or class. It restricts direct access to some of an object's components, which can prevent the accidental modification of data. Encapsulation is achieved through access modifiers like `public`, `private`, `protected`, and `internal`.
+# Encapsulation vs Abstraction
+## 🔒 Encapsulation
+
+<p>Encapsulation is about hiding the internal state of an object and only exposing controlled access to it.
+Example: A BankAccount class with a private balance and a setter method that prevents negative values.
 </p>
 
 ```cs
-public class Car
+public class BankAccount
 {
-    public string Model { get; set; }
-    public int Year { get; set; }
-    public double Mileage { get; private set; }
+    private decimal balance;
 
-    public Car(string model, int year)
+    public BankAccount(decimal initialBalance)
     {
-        Model = model;
-        Year = year;
-        Mileage = 0.0;
+        if (initialBalance >= 0)
+            balance = initialBalance;
+        else
+            balance = 0;
     }
 
-    public virtual void Drive(double distance)
+    // Encapsulation: controlled way to modify balance
+    public void Deposit(decimal amount)
     {
-        Console.WriteLine($"the Car class is driving {distance} miles.");
+        if (amount > 0)
+            balance += amount;
     }
 
-    public override string ToString()
+    public void Withdraw(decimal amount)
     {
-        return $"{Year} {Model} with {Mileage} miles";
+        if (amount > 0 && amount <= balance)
+            balance -= amount;
     }
 
-
+    public decimal GetBalance()
+    {
+        return balance;
+    }
 }
 ```
+<p>➡️ Here, the balance is private, and the class provides methods (Deposit, Withdraw) to safely modify it.
+This ensures the balance cannot be negative or directly accessed from outside.
+</p>
+
+## 🎭 Abstraction
+
+<p> Abstraction is about hiding implementation details and showing only the essential behavior.
+We can achieve this using interfaces or abstract classes.
+
+Example: An interface IBankAccount that defines what a bank account can do, but not how.
+</p>
 
 ```cs
-public class Vehicle : Car
+public interface IBankAccount
 {
+    void Deposit(decimal amount);
+    void Withdraw(decimal amount);
+    decimal GetBalance();
+}
 
-    private int _numberOfWheels;
-    public int numberOfWheels
+public class BankAccount : IBankAccount
+{
+    private decimal balance;
+
+    public BankAccount(decimal initialBalance)
     {
-        get { return _numberOfWheels; }
-        set { _numberOfWheels = value; }
+        if (initialBalance >= 0)
+            balance = initialBalance;
+        else
+            balance = 0;
     }
 
-    private string make;
-
-    public Vehicle(string model, int year, string make) : base(model, year)
+    public void Deposit(decimal amount)
     {
-        this.make = make;
-        numberOfWheels = 4;
-
-    }
-    public override void Drive(double distance)
-    {
-        Console.WriteLine($"The Vehicle class is driving {distance} miles.");
-
+        if (amount > 0)
+            balance += amount;
     }
 
+    public void Withdraw(decimal amount)
+    {
+        if (amount > 0 && amount <= balance)
+            balance -= amount;
+    }
 
+    public decimal GetBalance()
+    {
+        return balance;
+    }
 }
 ```
+<p>➡️ Here, when we look at IBankAccount, we know what the class can do (Deposit, Withdraw, GetBalance)
+but we don’t see how it works internally. The implementation is hidden inside BankAccount.
+</p>
+
 ```cs
+// vehicle class inheret from car 
 List<Object> objects = new List<Object>();
 objects.Add(new Car("Object1", 10));
 objects.Add(new Vehicle("Object2", 20, "Toyota"));
@@ -173,4 +209,178 @@ foreach (var obj in objects)
 
 ```
 
+### Coupling in OOP
+<p>It measures how much one class relies on another to function, impacting the system's maintainability, flexibility, and reusability.
+Types of Coupling
+</p>
 
+#### Tight Coupling:
+
+<p>Classes are highly dependent on each other.
+Changes in one class often require changes in another.
+Example: A class directly accesses the internal fields of another class.
+Drawbacks: Reduces flexibility, makes maintenance harder, and complicates testing.
+</p>
+
+#### Loose Coupling:
+
+<p>Classes interact through well-defined interfaces or abstractions, minimizing direct dependencies.
+Achieved using techniques like dependency injection, interfaces, or abstract classes.
+Benefits: Enhances modularity, testability, and maintainability.
+</p>
+
+
+
+### Composition in OOP
+
+<p>Composition is a design principle in OOP where a class is composed of one or more objects from other classes to achieve its functionality. It represents a "has-a" relationship, allowing for flexible and modular designs.
+Key Characteristics
+</p>
+
+<p>Strong Ownership: The composite object owns the components, and their lifecycle is tied to the composite.
+Flexibility: Components can be swapped or modified without affecting the composite class.
+Reusability: Components can be reused across different classes.
+</p>
+
+### Composition vs. Inheritance
+
+##### Composition: "Has-a" relationship, e.g., a Car has an Engine.
+##### Inheritance: "Is-a" relationship, e.g., a Car is a Vehicle.
+##### Composition is often preferred over inheritance because it promotes loose coupling and avoids the fragility of deep inheritance hierarchies.
+
+```cs
+
+class Engine {
+    void start() {
+        System.out.println("Engine started");
+    }
+}
+
+class Wheel {
+    void rotate() {
+        System.out.println("Wheel rotating");
+    }
+}
+
+class Car {
+    private Engine engine; // Composition: Car has an Engine
+    private Wheel[] wheels; // Composition: Car has Wheels
+
+    Car() {
+        this.engine = new Engine();
+        this.wheels = new Wheel[]{new Wheel(), new Wheel(), new Wheel(), new Wheel()};
+    }
+
+    void drive() {
+        engine.start();
+        for (Wheel wheel : wheels) {
+            wheel.rotate();
+        }
+        System.out.println("Car is driving");
+    }
+}
+
+```
+
+#### Benefits of Composition
+
+<p>Promotes loose coupling by allowing components to be independent.
+Enhances flexibility, as components can be replaced or modified easily.
+Simplifies testing by isolating components.
+Avoids issues with deep inheritance, such as tight coupling to parent classes.
+</p>
+
+
+```cs
+
+Practical Example
+interface Engine {
+    void start();
+}
+
+interface Wheel {
+    void rotate();
+}
+
+class BasicEngine implements Engine {
+    public void start() {
+        System.out.println("Basic engine started");
+    }
+}
+
+class BasicWheel implements Wheel {
+    public void rotate() {
+        System.out.println("Basic wheel rotating");
+    }
+}
+
+class Car {
+    private Engine engine;
+    private Wheel[] wheels;
+
+    Car(Engine engine, Wheel[] wheels) {
+        this.engine = engine;
+        this.wheels = wheels;
+    }
+
+    void drive() {
+        engine.start();
+        for (Wheel wheel : wheels) {
+            wheel.rotate();
+        }
+        System.out.println("Car is driving");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Engine engine = new BasicEngine();
+        Wheel[] wheels = {new BasicWheel(), new BasicWheel(), new BasicWheel(), new BasicWheel()};
+        Car car = new Car(engine, wheels);
+        car.drive();
+    }
+}
+
+```
+## Polymorphism in OOP
+
+<p>Polymorphism is a core principle of Object-Oriented Programming (OOP) that allows objects of different classes to be treated as objects of a common base class or interface. It enables a single interface or method to work with different types of data or behaviors, making code more flexible and reusable. The term "polymorphism" means "many forms," reflecting how a single method call can produce different behaviors based on the object’s type.
+</p>
+
+### Types of Polymorphism
+1. **Compile-time Polymorphism (Method Overloading)**:
+   - Achieved by defining multiple methods with the same name but different parameters (type, number, or order).
+   - The method to be called is determined at compile time based on the method signature.
+
+```cs
+public class MathUtils {
+    // Method Overloading
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public double add(double a, double b) {
+        return a + b;
+    }
+
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+```
+2. **Runtime Polymorphism (Method Overriding)**:
+   - Achieved through inheritance, where a subclass provides a specific implementation of a method that is already defined in its superclass.
+   - The method to be called is determined at runtime based on the actual object type.
+
+```cs
+public class Animal {
+    public virtual void makeSound() {
+        Console.WriteLine("Animal makes a sound");
+    }
+}
+public class Dog : Animal {
+    public override void makeSound() {
+        Console.WriteLine("Dog barks");
+    }
+}
+```
