@@ -1,7 +1,14 @@
 
 public class Vehicle : Car
 {
-    private int numberOfWheels;
+
+    private int _numberOfWheels;
+    public int numberOfWheels
+    {
+        get { return _numberOfWheels; }
+        set { _numberOfWheels = value; }
+    }
+
     private string make;
 
     public Vehicle(string model, int year, string make) : base(model, year)
