@@ -1,13 +1,33 @@
-﻿using OOP.Encapsulation;
+﻿
 
-class Program
+List<Object> objects = new List<Object>();
+objects.Add(new Car("Object1", 10));
+objects.Add(new Vehicle("Object2", 20, "Toyota"));
+
+foreach (var obj in objects)
 {
-    static void Main(string[] args)
+
+    if (obj is Vehicle vehicle)
     {
-        Vehicle vehicle = new Vehicle("Toyota", 2020, "black");
-        vehicle.numberOfWheels = 4;
-        Console.WriteLine($"Vehicle Make: {vehicle.Model}, Model: {vehicle.Mileage}, Year: {vehicle.Year}, Wheels: {vehicle.numberOfWheels}");
-
+        vehicle.Drive(200);
     }
-
+    else if (obj is Car car)
+    {
+        car.Drive(100);
+    }
 }
+
+foreach (var obj in objects)
+{
+
+    if (obj is Car car)
+    {
+        car.Drive(100);
+    }
+    else if (obj is Vehicle vehicle)
+    {
+        vehicle.Drive(200);
+    }
+}
+
+

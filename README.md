@@ -78,4 +78,99 @@ class Config
     is the bundling of data and methods that operate on that data within a single unit, or class. It restricts direct access to some of an object's components, which can prevent the accidental modification of data. Encapsulation is achieved through access modifiers like `public`, `private`, `protected`, and `internal`.
 </p>
 
+```cs
+public class Car
+{
+    public string Model { get; set; }
+    public int Year { get; set; }
+    public double Mileage { get; private set; }
+
+    public Car(string model, int year)
+    {
+        Model = model;
+        Year = year;
+        Mileage = 0.0;
+    }
+
+    public virtual void Drive(double distance)
+    {
+        Console.WriteLine($"the Car class is driving {distance} miles.");
+    }
+
+    public override string ToString()
+    {
+        return $"{Year} {Model} with {Mileage} miles";
+    }
+
+
+}
+```
+
+```cs
+public class Vehicle : Car
+{
+
+    private int _numberOfWheels;
+    public int numberOfWheels
+    {
+        get { return _numberOfWheels; }
+        set { _numberOfWheels = value; }
+    }
+
+    private string make;
+
+    public Vehicle(string model, int year, string make) : base(model, year)
+    {
+        this.make = make;
+        numberOfWheels = 4;
+
+    }
+    public override void Drive(double distance)
+    {
+        Console.WriteLine($"The Vehicle class is driving {distance} miles.");
+
+    }
+
+
+}
+```
+```cs
+List<Object> objects = new List<Object>();
+objects.Add(new Car("Object1", 10));
+objects.Add(new Vehicle("Object2", 20, "Toyota"));
+
+foreach (var obj in objects)
+{
+
+    if (obj is Vehicle vehicle)
+    {
+        vehicle.Drive(200);
+    }
+    else if (obj is Car car)
+    {
+        car.Drive(100);
+    }
+}
+//the Car class is driving 100 miles.
+//The Vehicle class is driving 200 miles.
+// if we swap the two if conditions , the output will be 
+
+foreach (var obj in objects)
+{
+
+     if (obj is Car car)
+    {
+        car.Drive(100);
+    }
+    else if (obj is Vehicle vehicle)
+    {
+        vehicle.Drive(200);
+    }
+}
+// output
+//the Car class is driving 100 miles.
+//The Vehicle class is driving 100 miles.
+
+```
+
 

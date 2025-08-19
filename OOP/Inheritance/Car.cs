@@ -14,7 +14,7 @@ public class Car
 
     public virtual void Drive(double distance)
     {
-        Console.WriteLine($"the Car class is driving");
+        Console.WriteLine($"the Car class is driving {distance} miles.");
     }
 
     public override string ToString()
