@@ -9,6 +9,7 @@ namespace ConsoleApp1.SOLID.O.BadExample
         public double Length { get; set; }
         public double Width { get; set; }
 
+
         public double CalculateArea()
         {
             switch (Type)

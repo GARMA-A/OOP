@@ -384,3 +384,31 @@ public class Dog : Animal {
     }
 }
 ```
+
+## SOLID Principles
+
+### S 
+<p>
+    Single responsibility principle (SRP): A class should have only one reason to change, meaning it should only have one job or responsibility.
+</p>
+
+### O
+<p>
+    Open/closed principle (OCP): Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
+</p>
+
+### L
+<p>
+    Liskov substitution principle (LSP): Objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+</p>
+
+### I
+<p>
+    Interface segregation principle (ISP): Clients should not be forced to depend on interfaces they do not use. Instead of one large interface, many small, specific interfaces are preferred.
+</p>
+
+### D
+<p>
+    Dependency inversion principle (DIP): High-level modules should not depend on low-level modules. Both should depend on abstractions (e.g., interfaces). Abstractions should not depend on details; details should depend on abstractions.
+</p>
+
