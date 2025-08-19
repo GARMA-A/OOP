@@ -1,0 +1,49 @@
+# Build results
+**/bin/
+**/obj/
+**/out/
+**/Debug/
+**/Release/
+
+# Visual Studio cache
+.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet packages
+*.nupkg
+*.snupkg
+# Exclude packages folder but keep restoreable projects
+packages/
+!packages/build/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Resharper/IDE files
+_ReSharper*/
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# DotCover
+*.dotCover
+
+# Test results
+TestResults/
+*.coverage
+*.coveragexml
+
+# Others
+*.dbmdl
+*.jfm
