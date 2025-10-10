@@ -1,21 +1,21 @@
 abstract class Beverage {
-	protected description: string = "Unknown"
+	protected _description: string = "Unknown"
 
-	get Description(): string {
-		return this.description
+	get description(): string {
+		return this._description
 	}
 
 	public abstract cost(): number;
 }
 
 abstract class Decerator extends Beverage {
-	public abstract get Description(): string;
+	public abstract get description(): string;
 }
 
 class Espresso extends Beverage {
 	constructor() {
 		super()
-		this.description = "Espresso";
+		this._description = "Espresso";
 	}
 	public cost(): number {
 		return 1.99;
@@ -25,7 +25,7 @@ class Espresso extends Beverage {
 class HouseBlend extends Beverage {
 	constructor() {
 		super()
-		this.description = "House Blend Coffee";
+		this._description = "House Blend Coffee";
 	}
 	public cost(): number {
 		return 0.89;
@@ -36,8 +36,8 @@ class HouseBlend extends Beverage {
 class Mocha extends Decerator {
 	constructor(public beverage: Beverage) { super() }
 
-	public get Description(): string {
-		return this.beverage.Description + ", Mocha";
+	public get description(): string {
+		return this.beverage.description + ", Mocha";
 	}
 	public cost() {
 		return .20 + this.beverage.cost();
@@ -46,8 +46,8 @@ class Mocha extends Decerator {
 
 class ExtraMilk extends Decerator {
 	constructor(public beverage: Beverage) { super() }
-	public get Description() {
-		return this.beverage.Description + ",Extra Milk"
+	public get description() {
+		return this.beverage.description + ",Extra Milk"
 	}
 	public cost(): number {
 		return this.beverage.cost() + 0.30
@@ -58,21 +58,21 @@ class ExtraMilk extends Decerator {
 
 const beverage = new Espresso();
 
-console.log(beverage.Description
+console.log(beverage.description
 	+ " $" + beverage.cost());
 
 
 const moca = new Mocha(beverage);
-console.log(moca.Description + " $" + moca.cost());
+console.log(moca.description + " $" + moca.cost());
 
 const beverage2 = new HouseBlend();
 const mocha = new Mocha(beverage2)
 
-console.log(mocha.Description + " $" + mocha.cost());
+console.log(mocha.description + " $" + mocha.cost());
 
 const extraMilk = new ExtraMilk(beverage2)
 
-console.log(extraMilk.Description + " $" + extraMilk.cost());
+console.log(extraMilk.description + " $" + extraMilk.cost());
 
 
 

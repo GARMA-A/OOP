@@ -15,29 +15,29 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Beverage = /** @class */ (function () {
     function Beverage() {
-        this.description = "Unknown";
+        this._description = "Unknown Beverage";
     }
-    Object.defineProperty(Beverage.prototype, "Description", {
+    Object.defineProperty(Beverage.prototype, "description", {
         get: function () {
-            return this.description;
+            return this._description;
         },
         enumerable: false,
         configurable: true
     });
     return Beverage;
 }());
-var Decerator = /** @class */ (function (_super) {
-    __extends(Decerator, _super);
-    function Decerator() {
+var CondimentDecorator = /** @class */ (function (_super) {
+    __extends(CondimentDecorator, _super);
+    function CondimentDecorator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    return Decerator;
+    return CondimentDecorator;
 }(Beverage));
 var Espresso = /** @class */ (function (_super) {
     __extends(Espresso, _super);
     function Espresso() {
         var _this = _super.call(this) || this;
-        _this.description = "Espresso";
+        _this._description = "Espresso";
         return _this;
     }
     Espresso.prototype.cost = function () {
@@ -49,7 +49,7 @@ var HouseBlend = /** @class */ (function (_super) {
     __extends(HouseBlend, _super);
     function HouseBlend() {
         var _this = _super.call(this) || this;
-        _this.description = "House Blend Coffee";
+        _this._description = "House Blend Coffee";
         return _this;
     }
     HouseBlend.prototype.cost = function () {
@@ -64,44 +64,44 @@ var Mocha = /** @class */ (function (_super) {
         _this.beverage = beverage;
         return _this;
     }
-    Object.defineProperty(Mocha.prototype, "Description", {
+    Object.defineProperty(Mocha.prototype, "description", {
         get: function () {
-            return this.beverage.Description + ", Mocha";
+            return this.beverage.description + ", Mocha";
         },
         enumerable: false,
         configurable: true
     });
     Mocha.prototype.cost = function () {
-        return .20 + this.beverage.cost();
+        return this.beverage.cost() + 0.20;
     };
     return Mocha;
-}(Decerator));
-var ExtraMilk = /** @class */ (function (_super) {
-    __extends(ExtraMilk, _super);
-    function ExtraMilk(beverage) {
+}(CondimentDecorator));
+var Whip = /** @class */ (function (_super) {
+    __extends(Whip, _super);
+    function Whip(beverage) {
         var _this = _super.call(this) || this;
         _this.beverage = beverage;
         return _this;
     }
-    Object.defineProperty(ExtraMilk.prototype, "Description", {
+    Object.defineProperty(Whip.prototype, "description", {
         get: function () {
-            return this.beverage.Description + ",Extra Milk";
+            return this.beverage.description + ", Whip";
         },
         enumerable: false,
         configurable: true
     });
-    ExtraMilk.prototype.cost = function () {
-        return this.beverage.cost() + 0.30;
+    Whip.prototype.cost = function () {
+        return this.beverage.cost() + 0.10;
     };
-    return ExtraMilk;
-}(Decerator));
-var beverage = new Espresso();
-console.log(beverage.Description
-    + " $" + beverage.cost());
-var moca = new Mocha(beverage);
-console.log(moca.Description + " $" + moca.cost());
-var beverage2 = new HouseBlend();
-var mocha = new Mocha(beverage2);
-console.log(mocha.Description + " $" + mocha.cost());
-var extraMilk = new ExtraMilk(beverage2);
-console.log(extraMilk.Description + " $" + extraMilk.cost());
+    return Whip;
+}(CondimentDecorator));
+var es = new Espresso();
+console.log(es.description + " $" + es.cost().toFixed(2));
+var es2 = new Mocha(es);
+console.log(es2.description + " $" + es2.cost().toFixed(2));
+var es3 = new Whip(es2);
+console.log(es3.description + " $" + es3.cost().toFixed(2));
+var hb = new HouseBlend();
+console.log(hb.description + " $" + hb.cost().toFixed(2));
+var hb2 = new Mocha(hb);
+console.log(hb2.description + " $" + hb2.cost().toFixed(2));
