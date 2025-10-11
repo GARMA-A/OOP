@@ -1,33 +1,39 @@
 package behaviors
 
-type QuackBehavior interface {
-	Quack() string
-}
-
 type FlyBehavior interface {
-	Fly() string
+	Fly()
+}
+type QuackBehavior interface {
+	Quack()
 }
 
 type FlyWithWings struct{}
 
-func (f *FlyWithWings) Fly() string {
-	return "I'm flying with wings!"
+func (f *FlyWithWings) Fly() {
+	println("I'm flying with wings!")
 }
 
 type FlyNoWay struct{}
 
-func (f *FlyNoWay) Fly() string {
-	return "I can't fly."
+func (f *FlyNoWay) Fly() {
+	println("I can't fly.")
 }
 
+// Quack behaviors
 type Quack struct{}
 
-func (q *Quack) Quack() string {
-	return "Quack!"
+func (q *Quack) Quack() {
+	println("Quack!")
+}
+
+type Squeak struct{}
+
+func (s *Squeak) Quack() {
+	println("Squeak!")
 }
 
 type MuteQuack struct{}
 
-func (m *MuteQuack) Quack() string {
-	return "Silence..."
+func (m *MuteQuack) Quack() {
+	println("<< Silence >>")
 }

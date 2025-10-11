@@ -1,13 +1,54 @@
 package main
 
 import (
-	"strategy/mallard_duck"
-	"strategy/weak_duck"
+	"strategy/behaviors"
 )
 
+type Duck struct {
+	flyBehavior   behaviors.FlyBehavior
+	quackBehavior behaviors.QuackBehavior
+}
+
+func (d *Duck) performFly() {
+	d.flyBehavior.Fly()
+}
+
+func (d *Duck) performQuack() {
+	d.quackBehavior.Quack()
+}
+
+type MuteQuack struct {
+	Duck
+}
+
+func NewMuteQuack() *MuteQuack {
+	return &MuteQuack{
+		Duck{
+			flyBehavior:   &behaviors.FlyNoWay{},
+			quackBehavior: &behaviors.MuteQuack{},
+		},
+	}
+}
+
+type MallardDuck struct {
+	Duck
+}
+
+func NewMallardDuck() *MallardDuck {
+	return &MallardDuck{
+		Duck{
+			flyBehavior:   &behaviors.FlyWithWings{},
+			quackBehavior: &behaviors.Quack{},
+		},
+	}
+}
+
 func main() {
-	myDuck := mallardduck.NewMallardDuck()
-	println(myDuck.Duck.PerformFly(), myDuck.Duck.PerformQuack())
-	anotherDuck := weakduck.NewWeakDuck()
-	println(anotherDuck.Duck.PerformFly(), anotherDuck.Duck.PerformQuack())
+	mallard := NewMallardDuck()
+	mallard.performFly()
+	mallard.performQuack()
+
+	mute := NewMuteQuack()
+	mute.performFly()
+	mute.performQuack()
 }
