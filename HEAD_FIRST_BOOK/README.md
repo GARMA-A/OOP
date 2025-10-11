@@ -10,3 +10,7 @@
 
 ## observer pattern
 <img src="./imgs/observer_pattern.png" />
+
+
+## factory pattenr
+<img src="./imgs/factory_pattern.png"/>
