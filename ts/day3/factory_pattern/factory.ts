@@ -1,4 +1,4 @@
-abstract class Pizza {
+abstract class pizza {
 
 	protected _name!: string;
 	get name(): string {
