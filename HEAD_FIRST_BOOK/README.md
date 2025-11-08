@@ -11,6 +11,12 @@
 ## observer pattern
 <img src="./imgs/observer_pattern.png" />
 
+## decorator pattern
+<img src="./imgs/decorator.png" />
+
 
 ## factory pattenr
 <img src="./imgs/factory_pattern.png"/>
+
+## Singlation Pattern
+<img src="./imgs/singleton.png"/>
