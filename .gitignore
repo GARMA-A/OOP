@@ -1,4 +1,5 @@
 # Build results
+**/node_modules/
 **/bin/
 **/obj/
 **/out/

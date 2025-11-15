@@ -44,11 +44,4 @@ func NewMallardDuck() *MallardDuck {
 }
 
 func main() {
-	mallard := NewMallardDuck()
-	mallard.performFly()
-	mallard.performQuack()
-
-	mute := NewMuteQuack()
-	mute.performFly()
-	mute.performQuack()
 }
