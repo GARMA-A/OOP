@@ -1,53 +1,52 @@
 package main
 
-type Observer interface {
+import "fmt"
+
+type IObserver interface {
 	update()
 }
-
-type Subject struct {
-	observers []Observer
+type IObservable interface {
+	add()
+	remove()
+	notify()
 }
 
-func (s *Subject) Subscripe(o Observer) {
-	s.observers = append(s.observers, o)
+type YoutubeChannel struct {
+	Subscripers []IObserver
 }
 
-func (s *Subject) Notify() {
-	for _, observer := range s.observers {
-		observer.update()
+type Subscriper struct {
+	name string
+}
+
+func (sb *Subscriper) update() {
+	fmt.Println(sb.name, "notified")
+}
+
+func (yt *YoutubeChannel) notify() {
+	for idx := range yt.Subscripers {
+		yt.Subscripers[idx].update()
 	}
 }
 
-func (s *Subject) Unsubscribe(o Observer) {
-	for i, observer := range s.observers {
-		if observer == o {
-			s.observers = append(s.observers[:i], s.observers[i+1:]...)
+func (yt *YoutubeChannel) add(newOb IObserver) {
+	yt.Subscripers = append(yt.Subscripers, newOb)
+}
+
+func (yt *YoutubeChannel) remove(Ob IObserver) {
+	for idx := range yt.Subscripers {
+		if yt.Subscripers[idx] == Ob {
+			yt.Subscripers = append(yt.Subscripers[:idx], yt.Subscripers[idx+1:]...)
 			break
 		}
 	}
 }
 
-type emplyee1 struct {
-	name string
-}
-
-func (e *emplyee1) update() {
-	print("Observer updated", e.name, "\n")
-}
-
-type emplyee2 struct {
-	name string
-}
-
-func (e *emplyee2) update() {
-	print("Observer updated", e.name, "\n")
-}
-
 func main() {
-	subject := &Subject{}
-	emp1 := &emplyee1{name: "emp1"}
-	emp2 := &emplyee2{name: "emp2"}
-	subject.Subscripe(emp1)
-	subject.Subscripe(emp2)
-	subject.Notify()
+	channel := &YoutubeChannel{}
+	sub1 := &Subscriper{name: "sub1"}
+	sub2 := &Subscriper{name: "sub2"}
+	channel.add(sub1)
+	channel.add(sub2)
+	channel.notify()
 }
